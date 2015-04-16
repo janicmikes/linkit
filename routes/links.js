@@ -2,75 +2,58 @@
 var express = require('express');
 var router = express.Router();
 
-/*
- * GET links.
- */
-router.get('/links', function(req, res) {
-    var db = req.db;
-    db.collection('links').find().toArray(function (err, items) {
-        res.json(items);
-    });
+var mongoose = require('mongoose');
+var Link = require('../models/Link.js');
+
+/* GET /links listing. */
+router.get('/', function (req, res, next) {
+  Link.find(function (err, links) {
+    if (err) {
+      return next(err);
+    }
+    res.json(links);
+  });
 });
 
-/*
- * POST to links.
- */
-router.post('/links', function(req, res) {
-    var db = req.db;
-    db.collection('links').insert(req.body, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    });
+/* POST /links */
+router.post('/', function (req, res, next) {
+  Link.create(req.body, function (err, post) {
+    if (err) {
+      return next(err);
+    }
+    res.json(post);
+  });
 });
 
-/*
- * PUT to links.
- */
-/*
-router.put('/links', function(req, res) {
-    var db = req.db;
-    db.collection('links').insert(req.params, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    });
-});
-*/
-
-/*
- * DELETE to deletelink.
- */
-router.delete('/links/:id', function(req, res) {
-    var db = req.db;
-    var linkToDelete = req.params.id;
-    db.collection('links').removeById(linkToDelete, function(err, result) {
-        res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
-    });
+/* GET /links/id */
+router.get('/:id', function (req, res, next) {
+  Link.findById(req.params.id, function (err, post) {
+    if (err) {
+      return next(err);
+    }
+    res.json(post);
+  });
 });
 
-/*
- * POST to upvote links.
- */
-router.post('/links/:id/up', function(req, res) {
-    var db = req.db;
-    db.collection('links').updateById(req.body, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    });
+/* PUT /links/:id */
+router.put('/:id', function (req, res, next) {
+  Link.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    if (err) {
+      return next(err);
+    }
+    res.json(post);
+  });
 });
 
-/*
- * POST to downvote links.
- */
-router.post('/links/:id/down', function(req, res) {
-    var db = req.db;
-    db.collection('links').updateById(req.body, function(err, result){
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    });
+
+/* DELETE /links/:id */
+router.delete('/:id', function (req, res, next) {
+  Link.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+    if (err) {
+      return next(err);
+    }
+    res.json(post);
+  });
 });
 
 module.exports = router;

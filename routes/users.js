@@ -1,37 +1,25 @@
+/*jslint node: true */
 var express = require('express');
 var router = express.Router();
 
-/*
- * GET userlist.
- */
-//router.get('/userlist', function(req, res) {
-//    var db = req.db;
-//    db.collection('userlist').find().toArray(function (err, items) {
-//        res.json(items);
-//    });
-//});
+var mongoose = require('mongoose');
+var User = require('../models/User.js');
 
-/*
- * POST to adduser.
- */
-//router.post('/adduser', function(req, res) {
-//    var db = req.db;
-//    db.collection('userlist').insert(req.body, function(err, result){
-//        res.send(
-//            (err === null) ? { msg: '' } : { msg: err }
-//        );
-//    });
-//});
+/* GET /users listing. */
+router.get('/', function(req, res, next) {
+  User.find(function (err, users) {
+    if (err) return next(err);
+    res.json(users);
+  });
+});
 
-/*
- * DELETE to deleteuser.
- */
-//router.delete('/deleteuser/:id', function(req, res) {
-//    var db = req.db;
-//    var userToDelete = req.params.id;
-//    db.collection('userlist').removeById(userToDelete, function(err, result) {
-//        res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
-//    });
-//});
+/* POST /users */
+router.post('/', function(req, res, next) {
+  User.create(req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
 
 module.exports = router;
+
