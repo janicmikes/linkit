@@ -4,7 +4,6 @@ var linkRepo = require('../data/links');
 
 router.get('/', function(req, res, next) {
   res.send(linkRepo);
-  //res.render('index', { title: 'Express' });
 });
 
 router.put('/', function(req, res, next) {
