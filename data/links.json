@@ -1,0 +1,25 @@
+{
+  "links": [
+    {
+      "title": "GitHub VCS",
+      "url": "http://www.github.com",
+      "rating": 1,
+      "sender": "janicmikes",
+      "date": "2015/04/20 18:00:00"
+    },
+    {
+      "title": "Suchmaschine",
+      "url": "http://www.google.com",
+      "rating": 1,
+      "sender": "janicmikes",
+      "date": "2015/04/05 18:00:00"
+    },
+    {
+      "title": "Gubis Page",
+      "url": "http://www.ygubler.ch",
+      "rating": 1,
+      "sender": "yanickgubler",
+      "date": "2015/04/01 18:00:00"
+    }
+  ]
+}
