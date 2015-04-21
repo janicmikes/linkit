@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/linkit', function (req, res, next) {
-    res.render('linkit', {"title": 'LinkIt - The Link Aggregator', "user": {}, "data": linkRepo});
+    res.render('linkit', {"title": 'LinkIt - The Link Aggregator', "user": {"username": "janicmikes", "fullname": "Janic Mikes"}, "data": linkRepo});
 });
 
 module.exports = router;
