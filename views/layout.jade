@@ -1,7 +1,11 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
+    meta(charset='utf-8')
+    title LinkIt - The Link Aggregator
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    .continer
+      block content

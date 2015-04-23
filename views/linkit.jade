@@ -1,0 +1,8 @@
+extends layout
+block content
+   ul
+      for link in linkrepo.links
+         li.well
+            .media-left= link.title
+      else
+         li No Links available
