@@ -4,7 +4,8 @@ var linkRepo = require('../data/links');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+    //res.render('index', {title: 'Express'});
+    res.redirect('/linkit');
 });
 
 router.get('/linkit', function (req, res, next) {
