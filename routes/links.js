@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var linkRepo = require('../data/links');
+var url = require('url');
+var linkRepo = require('../data/data').linkRepo;
 
 router.get('/', function(req, res, next) {
   res.send(linkRepo);
@@ -8,6 +9,12 @@ router.get('/', function(req, res, next) {
 
 router.put('/', function(req, res, next) {
   console.log('put');
+  var url_parts = url.parse(req.url, true);
+  var query = url_parts.query;
+  console.log(query);
+  console.log(query.title);
+  linkRepo['links'].push({"title":query.title, "description":query.description, "url":query.url, "rating":query.rating, "sender":{"username":query.username, "fullname":query.fullname}, "date":"2015/04/20 18:00:00"});
+  res.end();
 });
 
 router.delete('/:id', function(req, res, next) {

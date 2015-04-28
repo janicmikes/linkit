@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var linkRepo = require('../data/links');
+var linkRepo = require('../data/data').linkRepo;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
