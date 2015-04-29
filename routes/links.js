@@ -26,17 +26,21 @@ router.put('/', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    console.log('delete ' + req.param('id'));
-    linkrepo.removeLinkById(req.param('id'));
+    console.log('delete ' + req.params.id);
+    linkrepo.removeLinkById(req.params.id);
+    res.end();
 });
 
 router.post('/:id/up', function (req, res, next) {
-    console.log('upvote ' + req.param('id'));
-
+    console.log('upvote ' + req.params.id);
+    linkrepo.upVoteLink(req.params.id);
+    res.end();
 });
 
 router.post('/:id/down', function (req, res, next) {
-    console.log('downvote ' + req.param('id'));
+    console.log('downvote ' + req.params.id);
+    linkrepo.downVoteLink(req.params.id);
+    res.end();
 });
 
 module.exports = router;

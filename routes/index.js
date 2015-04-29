@@ -9,6 +9,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/linkit', function (req, res, next) {
+    console.log('get Frontend');
     res.render('linkit', {"title": 'LinkIt - The Link Aggregator', "user": {"username": "janicmikes", "fullname": "Janic Mikes"}, "data": linkrepo.getAllLinks()});
 });
 
