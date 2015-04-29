@@ -14,14 +14,6 @@ router.put('/', function (req, res, next) {
     console.log(query);
     console.log(query.title);
     linkrepo.addLink(query.title, query.description, query.url);
-    //linkRepo['links'].push({
-    //    "title": query.title,
-    //    "description": query.description,
-    //    "url": query.url,
-    //    "rating": query.rating,
-    //    "sender": {"username": query.username, "fullname": query.fullname},
-    //    "date": "2015/04/20 18:00:00"
-    //});
     res.end();
 });
 

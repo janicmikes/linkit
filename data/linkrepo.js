@@ -1,5 +1,12 @@
+var session = {
+    user: {
+        username: "janicmikes"
+    }
+}
+var userrepo = require('./userrepo');
+
 var linkrepo = {
-    links: [],
+    links: require('./links'),
     getAllLinks: function () {
         return this.links;
     },
@@ -14,6 +21,8 @@ var linkrepo = {
                 "title": title,
                 "description": description,
                 "url": url,
+                "rating": 0,
+                "sender": userrepo.getUserByUsername(session.user.username),
                 "date": Date.now()
             });
     },
@@ -25,6 +34,7 @@ var linkrepo = {
         for (var i = 0; i < this.links.length; i++) {
             if (this.links[i].id === id) {
                 this.links.splice(i, 1);
+                break;
             }
         }
     },

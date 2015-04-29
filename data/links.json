@@ -1,6 +1,6 @@
 [
   {
-    "id": 1
+    "id": 1,
     "title": "GitHub VCS",
     "description": "Powerful collaboration, code review, and code management for open source and private projects.",
     "url": "http://www.github.com",
@@ -12,7 +12,7 @@
     "date": "2015/04/20 18:00:00"
   },
   {
-    "id": 2
+    "id": 2,
     "title": "Search Engine",
     "description": "A very popular search engine",
     "url": "http://www.google.com",
@@ -24,7 +24,7 @@
     "date": "2015/04/05 18:00:00"
   },
   {
-    "id": 3
+    "id": 3,
     "title": "Gubis Page",
     "url": "http://www.ygubler.ch",
     "rating": -1,
