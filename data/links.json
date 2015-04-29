@@ -1,36 +1,37 @@
-{
-  "links": [
-    {
-      "title": "GitHub VCS",
-      "description": "Powerful collaboration, code review, and code management for open source and private projects.",
-      "url": "http://www.github.com",
-      "rating": 3,
-      "sender": {
-        "username": "",
-        "fullname": "Janic Mikes"
-      },
-      "date": "2015/04/20 18:00:00"
+[
+  {
+    "id": 1
+    "title": "GitHub VCS",
+    "description": "Powerful collaboration, code review, and code management for open source and private projects.",
+    "url": "http://www.github.com",
+    "rating": 3,
+    "sender": {
+      "username": "",
+      "fullname": "Janic Mikes"
     },
-    {
-      "title": "Search Engine",
-      "description": "A very popular search engine",
-      "url": "http://www.google.com",
-      "rating": 2,
-      "sender": {
-        "username": "janicmikes",
-        "fullname": "Janic Mikes"
-      },
-      "date": "2015/04/05 18:00:00"
+    "date": "2015/04/20 18:00:00"
+  },
+  {
+    "id": 2
+    "title": "Search Engine",
+    "description": "A very popular search engine",
+    "url": "http://www.google.com",
+    "rating": 2,
+    "sender": {
+      "username": "janicmikes",
+      "fullname": "Janic Mikes"
     },
-    {
-      "title": "Gubis Page",
-      "url": "http://www.ygubler.ch",
-      "rating": -1,
-      "sender": {
-        "username": "yanickgubler",
-        "fullname": "Yanick Gubler"
-      },
-      "date": "2015/04/01 18:00:00"
-    }
-  ]
-}
+    "date": "2015/04/05 18:00:00"
+  },
+  {
+    "id": 3
+    "title": "Gubis Page",
+    "url": "http://www.ygubler.ch",
+    "rating": -1,
+    "sender": {
+      "username": "yanickgubler",
+      "fullname": "Yanick Gubler"
+    },
+    "date": "2015/04/01 18:00:00"
+  }
+]
