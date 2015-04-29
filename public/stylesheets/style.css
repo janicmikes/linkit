@@ -13,3 +13,10 @@ a {
 .votes{
     text-align: center;
 }
+
+#messages{
+    position: absolute;
+    top: 60px;
+    left: 10%;
+    width: 80%;
+}

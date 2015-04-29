@@ -9,12 +9,10 @@ router.get('/', function (req, res, next) {
 
 router.put('/', function (req, res, next) {
     console.log('put');
-    var url_parts = url.parse(req.url, true);
-    var query = url_parts.query;
-    console.log(query);
-    console.log(query.title);
-    linkrepo.addLink(query.title, query.description, query.url);
-    res.end();
+    console.log(req.body);
+    linkrepo.addLink(req.body.title, req.body.url, req.body.description);
+    res.send('{"text": "thanks for the data"}');
+    //res.end();
 });
 
 router.delete('/:id', function (req, res, next) {

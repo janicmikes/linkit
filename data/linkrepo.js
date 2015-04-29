@@ -10,7 +10,7 @@ var linkrepo = {
     getAllLinks: function () {
         return this.links;
     },
-    addLink: function (title, description, url) {
+    addLink: function (title, url, description) {
         // TODO: Check if session user exists and use user credentials for creation
         // like:
         // "sender": session.user
@@ -19,8 +19,8 @@ var linkrepo = {
             {
                 "id": this.links.length + 1,
                 "title": title,
-                "description": description,
                 "url": url,
+                "description": description,
                 "rating": 0,
                 "sender": userrepo.getUserByUsername(session.user.username),
                 "date": Date.now()
