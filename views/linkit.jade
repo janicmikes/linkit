@@ -2,16 +2,16 @@ extends layout
 block content
     ul.media-list
         for link in links
-            li.media.well
+            li.media.well(id='link-#{link.id}')
                 .media-left
-                    button(type='button').btn.btn-default.btn-sm
+                    button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.upvotelink
                         span.glyphicon.glyphicon-chevron-up
-                    .votes=link.rating
-                    button(type='button').btn.btn-default.btn-sm
+                    .votes(id='linkvotes-#{link.id}')=link.rating
+                    button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.downvotelink
                         span.glyphicon.glyphicon-chevron-down
                 .media-body
                     if user.username === link.sender.username
-                        button.btn.btn-danger.btn-sm.pull-right Delete
+                        button.btn.btn-danger.btn-sm.pull-right.deletelink(data-id='#{link.id}') Delete
                     h4.media-heading= link.title
                         | &nbsp;
                         a(href=link.url, target='_blank')= link.url

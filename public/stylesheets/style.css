@@ -15,8 +15,12 @@ a {
 }
 
 #messages{
-    position: absolute;
+    position: fixed;
     top: 60px;
     left: 10%;
     width: 80%;
+}
+
+.navbar-text {
+    margin-right: 15px;
 }

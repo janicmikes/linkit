@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var linkrepo = require('../data/linkrepo');
+
 var session = {
     user: {
         username: "janicmikes",
@@ -11,12 +11,13 @@ var session = {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     //res.render('index', {title: 'Express'});
+    req.app.get('linkrepo').initDemo();
     res.redirect('/linkit');
 });
 
 router.get('/linkit', function (req, res, next) {
     console.log('get Frontend');
-    res.render('linkit', {"user": session.user, "links": linkrepo.getAllLinks()});
+    res.render('linkit', {"user": session.user, "links": req.app.get('linkrepo').getAllLinks()});
 });
 
 module.exports = router;

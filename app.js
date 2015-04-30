@@ -9,12 +9,17 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var links = require('./routes/links');
 
+var linkrepo = require('./data/linkrepo');
+
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// Data repositories
+app.set('linkrepo', linkrepo);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
