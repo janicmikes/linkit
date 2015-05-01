@@ -1,0 +1,21 @@
+for link in links
+    li.media(id='link-#{link.id}')
+        .media-left
+            button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.upvotelink
+                span.glyphicon.glyphicon-chevron-up
+            .votes(id='linkvotes-#{link.id}')=link.rating
+            button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.downvotelink
+                span.glyphicon.glyphicon-chevron-down
+        .media-body
+            if user && user.username == link.sender.username
+                button.btn.btn-danger.btn-sm.pull-right.deletelink(data-id='#{link.id}') Delete
+            h4.media-heading= link.title
+                | &nbsp;
+                a(href=link.url, target='_blank')= link.url
+            p=link.description
+            p Created by&nbsp;
+                a(href='users/' + link.sender.username)=link.sender.fullname
+                | &nbsp;
+                =link.date
+else
+    li Sorry no links yet

@@ -1,14 +1,76 @@
 (function ($) {
+    var timeout;
+    var pulling;
 
-    function success(response) {
-        if (response.type == "error") {
-            $('#messages').html("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
-        } else {
-            $('#messages').html("<div class='alert alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
+    function pollDataFromServer() {
+        console.log('restart timer');
+        clearTimeout(pulling);
+        pulling = window.setTimeout(getDataFromServer, 2000);
+    }
+
+    function getDataFromServer() {
+        $.ajax(
+            '/links',
+            {
+                method: 'GET',
+                cache: true
+            }
+        )
+            .done(function (res) {
+                $('#linklist').html(res);
+                listen();
+                console.log("success");
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function (res) {
+                pollDataFromServer();
+            });
+
+    }
+
+    getDataFromServer();
+
+    $("#newlinksubmit").click(function () {
+        saveLink();
+        $('form[name=addlink]')[0].reset();
+    });
+
+    function pullLinks() {
+        $.ajax(
+            '/links',
+            {
+                method: 'GET',
+                cache: true
+            }
+        )
+            .done(function () {
+                console.log("success");
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function (res) {
+                debugmessage(res);
+                window.setTimeout(pullLinks, 50000);
+            });
+
+
+    }
+
+    function debugmessage(response) {
+        if (response != undefined) {
+            if (response.type == "error") {
+                $('#messages').html("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
+            } else {
+                $('#messages').html("<div class='alert alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
+            }
         }
-
+        getDataFromServer();
         //timing the alert box to close after 5 seconds
-        window.setTimeout(function () {
+        clearTimeout(timeout);
+        timeout = window.setTimeout(function () {
             $(".alert").fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
@@ -20,25 +82,18 @@
         });
     }
 
-    function error() {
-        $('#messages').html("<div class='alert alert-danger'>An Error occurred!</div>");
-    }
-
     function saveLink() {
         $.ajax(
             '/links',
             {
                 method: 'PUT',
-                cache: false,
                 data: {
                     title: $("#newlinktitle")[0].value,
                     url: $("#newlinkurl")[0].value
                 },
-                dataType: "json",
-                success: success,
-                error: error
+                dataType: "json"
             }
-        );
+        ).always(debugmessage);
     }
 
     function deleteLink(id) {
@@ -46,12 +101,13 @@
             '/links/' + id,
             {
                 method: 'DELETE',
-                cache: false,
-                dataType: "json",
-                success: success,
-                error: error
+                dataType: "json"
             }
-        );
+        ).always(debugmessage);
+
+        $('#link-' + id).fadeTo(500, 0).slideUp(300, function () {
+            $(this).remove();
+        });
     }
 
     function upvotelink(id) {
@@ -59,12 +115,12 @@
             '/links/' + id + '/up',
             {
                 method: 'POST',
-                cache: false,
-                dataType: "json",
-                success: success,
-                error: error
+                dataType: "json"
             }
-        );
+        ).always(debugmessage);
+
+        $('#linkvotes-' + id).text($('#linkvotes-' + id).text() - -1);
+
     }
 
     function downvotelink(id) {
@@ -72,38 +128,26 @@
             '/links/' + id + '/down',
             {
                 method: 'POST',
-                cache: false,
-                dataType: "json",
-                success: success,
-                error: error
+                dataType: "json"
             }
-        );
+        ).always(debugmessage);
+
+        $('#linkvotes-' + id).text($('#linkvotes-' + id).text() - 1);
     }
 
-    $(function () {
-        $("#newlinksubmit").click(function () {
-            var $btn = $(this).button('loading');
-            saveLink();
-            $btn.button('reset');
-        });
-
+    function listen() {
         $(".deletelink").click(function () {
             deleteLink(this.dataset.id);
-            //$('#link-' + this.dataset.id).remove();
-            $('#link-' + this.dataset.id).fadeTo(500, 0).slideUp(300, function () {
-                $(this).remove();
-            });
         });
 
         $(".upvotelink").click(function () {
             upvotelink(this.dataset.id);
-            $('#linkvotes-' + this.dataset.id).text($('#linkvotes-' + this.dataset.id).text() - -1);
         });
 
         $(".downvotelink").click(function () {
             downvotelink(this.dataset.id);
-            $('#linkvotes-' + this.dataset.id).text($('#linkvotes-' + this.dataset.id).text() - 1);
         });
-    });
+
+    }
 
 })(jQuery);

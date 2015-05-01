@@ -22,7 +22,10 @@ var linkrepo = {
         return ++this.sequence;
     },
     getAllLinks: function () {
-        return this.links;
+        return this.links
+            .sort(function (a, b) {
+                return b.rating - a.rating;
+            });
     },
     addLink: function (title, url, description, rating, date) {
         // TODO: Check if session user exists and use user credentials for creation

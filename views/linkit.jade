@@ -1,8 +1,8 @@
 extends layout
 block content
-    ul.media-list
+    ul.media-list#linklist
         for link in links
-            li.media.well(id='link-#{link.id}')
+            li.media(id='link-#{link.id}')
                 .media-left
                     button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.upvotelink
                         span.glyphicon.glyphicon-chevron-up
@@ -10,7 +10,7 @@ block content
                     button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.downvotelink
                         span.glyphicon.glyphicon-chevron-down
                 .media-body
-                    if user.username === link.sender.username
+                    if user && user.username == link.sender.username
                         button.btn.btn-danger.btn-sm.pull-right.deletelink(data-id='#{link.id}') Delete
                     h4.media-heading= link.title
                         | &nbsp;

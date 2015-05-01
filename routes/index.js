@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/linkit', function (req, res, next) {
     console.log('get Frontend');
-    res.render('linkit', {"user": session.user, "links": req.app.get('linkrepo').getAllLinks()});
+    res.render('index', {"user": session.user, "links": req.app.get('linkrepo').getAllLinks()});
 });
 
 module.exports = router;

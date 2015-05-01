@@ -26,7 +26,7 @@ html(lang='en')
                         p.navbar-text.pull-right.
                             Welcome, #{user.fullname}
                     else
-                        form.navbar-form.navbar-right(role='form')
+                        form.navbar-form.navbar-right(role='form', name='login')
                             .form-group
                                 input.form-control(type='text', placeholder='Username')
                             = " "
@@ -39,12 +39,18 @@ html(lang='en')
         .jumbotron
             .container
                 h1 Welcome to LinkIt
-                form(role='form')
-                    div.form-group
-                        label(for='newlinkurl') New Link
-                        input(type='text', placeholder='Link Title', name='title').form-control#newlinktitle
-                        input(type='text', placeholder='Link URL', name='url').form-control#newlinkurl
-                    button(type='button', data-loading-text='Saving...').btn.btn-primary.btn-lg#newlinksubmit Post New Link
+                h2 Add your Link
+                form(role='form', name='addlink', autocomplete='off')
+                    .form-group
+                        label(for='title') URL
+                        input(type='text', placeholder='http://www.domain.com', name='url').form-control#newlinkurl
+                    .form-group
+                        label(for='title') Title
+                        input(type='text', placeholder='My Cool Page', name='title').form-control#newlinktitle
+                    .form-group
+                        label(for='title') Description
+                        input(type='text', placeholder='Description', name='description').form-control#newlinkdescription
+                    button(type='button').btn.btn-primary.btn-lg#newlinksubmit Post New Link
         .container
             block content
             hr

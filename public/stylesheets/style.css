@@ -12,6 +12,7 @@ a {
 
 .votes{
     text-align: center;
+    line-height: 2em;
 }
 
 #messages{
