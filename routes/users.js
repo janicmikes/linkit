@@ -2,8 +2,20 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/login', function (req, res, next) {
+    if(req.app.get('userrepo').getUserByUsername(req.body.username)){
+        req.session.username = req.body.username;
+    } else {
+        // failed login
+    }
+    res.redirect('/linkit');
 });
+
+/* GET users listing. */
+router.get('/logout', function (req, res, next) {
+    req.session.username = undefined;
+    res.redirect('/linkit');
+});
+
 
 module.exports = router;

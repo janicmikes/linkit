@@ -1,8 +1,3 @@
-var session = {
-    user: {
-        username: "janicmikes"
-    }
-}
 var userrepo = require('./userrepo');
 
 var linkrepo = {
@@ -14,7 +9,7 @@ var linkrepo = {
         this.sequence = 0;
         for (var i = 0; i < this.demolinks.length; i++) {
             var tmplink = this.demolinks[i];
-            this.addLink(tmplink.title, tmplink.url, tmplink.description, tmplink.rating, tmplink.date);
+            this.addLink(tmplink.title, tmplink.url, tmplink.description, tmplink.sender, tmplink.rating, tmplink.date);
         }
     },
     sequence: 0,
@@ -27,18 +22,12 @@ var linkrepo = {
                 return b.rating - a.rating;
             });
     },
-    addLink: function (title, url, description, rating, date) {
-        // TODO: Check if session user exists and use user credentials for creation
-        // like:
-        // "sender": session.user
-        // --> session.user is a user object
+    addLink: function (title, url, description, sender, rating, date) {
         if (rating === undefined) rating = 0;
         if (date === undefined) {
             date = new Date();
-        } else {
-            date = new Date(date);
         }
-        if (session.user.username != undefined) {
+        if (sender != undefined) {
             this.links.push(
                 {
                     "id": this.nextLinkId(),
@@ -46,11 +35,12 @@ var linkrepo = {
                     "url": url,
                     "description": description,
                     "rating": rating,
-                    "sender": userrepo.getUserByUsername(session.user.username),
+                    "sender": userrepo.getUserByUsername(sender),
                     "date": date
                 }
             );
         }
+        return true;
     },
     removeLinkById: function (id) {
         // TODO: Check if session user exists and if user is creator of link
@@ -69,22 +59,20 @@ var linkrepo = {
         }
     },
     upVoteLink: function (id) {
-        // TODO: (f) Check if session user exists and if user already voted for this link
+        this.getLinkById(id).rating++;
+    },
+    downVoteLink: function (id) {
+        this.getLinkById(id).rating--;
+    },
+    getLinkById: function(id){
         for (var i = 0; i < this.links.length; i++) {
             if (this.links[i].id == id) {
-                this.links[i].rating++;
-                break;
+                return this.links[i];
             }
         }
     },
-    downVoteLink: function (id) {
-        // TODO: (f) Check if session user exists and if user already voted for this link
-        for (var i = 0; i < this.links.length; i++) {
-            if (this.links[i].id == id) {
-                this.links[i].rating--;
-                break;
-            }
-        }
+    isOwner: function (username, id){
+        return username != undefined && this.getLinkById(id).sender.username == username;
     }
 }
 

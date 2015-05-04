@@ -20,23 +20,20 @@ html(lang='en')
                         span.icon-bar
                     a.navbar-brand(href='') Linkit
                 .navbar-collapse.collapse
-                    input(type="checkbox")#enablepull
                     a.navbar-btn.btn.btn-sm.btn-danger(href='/') Reset
-                    //-button.navbar-btn.btn.btn-sm.btn-primary(data-toggle='button' aria-pressed='false') Poll Data
                     if user
-                        button.navbar-btn.pull-right.btn.btn-sm.btn-danger(type='button')#signout Sign out
+                        a.navbar-btn.pull-right.btn.btn-sm.btn-danger(href='/users/logout')#signout Sign out
                         p.navbar-text.pull-right.
                             Welcome, #{user.fullname}
                     else
-                        form.navbar-form.navbar-right(role='form', name='login')
+                        form.navbar-form.navbar-right(role='form', method='post', name='login', action='/users/login')
                             .form-group
-                                input.form-control(type='text', placeholder='Username')
+                                input.form-control(type='text', name='username', placeholder='Username', required)
                             = " "
-                            .form-group
-                                input.form-control(type='password', placeholder='Password')
-                            = " "
+                            //-.form-group
+                            //-    input.form-control(type='password', placeholder='Password')
+                            //-= " "
                             button.btn.btn-success(type='submit') Sign in
-                // /.navbar-collapse
         // Main jumbotron for a primary marketing message or call to action
         .jumbotron
             .container
@@ -45,10 +42,10 @@ html(lang='en')
                 form(role='form', name='addlink', autocomplete='off')
                     .form-group
                         label(for='title') URL
-                        input(type='url', placeholder='http://www.domain.com', name='url').form-control#newlinkurl
+                        input(type='url', placeholder='http://www.domain.com', name='url', required ).form-control#newlinkurl
                     .form-group
                         label(for='title') Title
-                        input(type='text', placeholder='My Cool Page', name='title').form-control#newlinktitle
+                        input(type='text', placeholder='My Cool Page', name='title', required).form-control#newlinktitle
                     .form-group
                         label(for='title') Description
                         input(type='text', placeholder='Description', name='description').form-control#newlinkdescription
@@ -64,7 +61,7 @@ html(lang='en')
                         button(type='button', data-id='#{link.id}').btn.btn-default.btn-sm.downvotelink
                             span.glyphicon.glyphicon-chevron-down
                     .media-body
-                        if user && user.username == link.sender.username
+                        if user && user == link.sender.username
                             button.btn.btn-danger.btn-sm.pull-right.deletelink(data-id='#{link.id}') Delete
                         h4.media-heading= link.title
                         | &nbsp;
@@ -80,7 +77,7 @@ html(lang='en')
             footer
                 p &copy; Janic Mikes & Yanick Gubler 2015
         // /container
-                                                      // Bootstrap core JavaScript
+        // Bootstrap core JavaScript
         // ==================================================
         script(src='javascripts/jquery.min.js')
         script(src='javascripts/bootstrap.min.js')

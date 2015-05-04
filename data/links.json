@@ -5,11 +5,8 @@
     "description": "Powerful collaboration, code review, and code management for open source and private projects.",
     "url": "http://www.github.com",
     "rating": 3,
-    "sender": {
-      "username": "",
-      "fullname": "Janic Mikes"
-    },
-    "date": "2015/04/20 18:00:00"
+    "sender": "yanickgubler",
+    "date": "04.05.2015 12:57"
   },
   {
     "id": 2,
@@ -17,21 +14,15 @@
     "description": "A very popular search engine",
     "url": "http://www.google.com",
     "rating": 2,
-    "sender": {
-      "username": "janicmikes",
-      "fullname": "Janic Mikes"
-    },
-    "date": "2015/04/05 18:00:00"
+    "sender": "janicmikes",
+    "date": "24.04.2015 18:32"
   },
   {
     "id": 3,
     "title": "Gubis Page",
     "url": "http://www.ygubler.ch",
     "rating": -1,
-    "sender": {
-      "username": "yanickgubler",
-      "fullname": "Yanick Gubler"
-    },
-    "date": "2015/04/01 18:00:00"
+    "sender": "petermuster",
+    "date": "17.04.2006 19:00"
   }
 ]

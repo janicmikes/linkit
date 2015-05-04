@@ -9,7 +9,7 @@
     }
 
     function getDataFromServer() {
-        if ($('#enablepull')[0].checked == true) {
+        //if ($('#enablepull')[0].checked == true) {
             $.ajax(
                 '/links',
                 {
@@ -20,17 +20,17 @@
                 .done(function (res) {
                     $('#linklist').html(res);
                     listen();
-                    console.log("success");
+                    //console.log("success");
                 })
                 .fail(function () {
-                    console.log("error");
+                    //console.log("error");
                 })
                 .always(function (res) {
 
                     //pollDataFromServer();
 
                 });
-        }
+        //}
         pollDataFromServer();
     }
 
@@ -42,7 +42,7 @@
     });
 
 
-    function debugmessage(response) {
+    var debugmessage = function (response) {
         if (response != undefined) {
             if (response.type == "error") {
                 $('#messages').append("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
