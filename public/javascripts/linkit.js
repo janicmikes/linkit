@@ -9,25 +9,28 @@
     }
 
     function getDataFromServer() {
-        $.ajax(
-            '/links',
-            {
-                method: 'GET',
-                cache: true
-            }
-        )
-            .done(function (res) {
-                $('#linklist').html(res);
-                listen();
-                console.log("success");
-            })
-            .fail(function () {
-                console.log("error");
-            })
-            .always(function (res) {
-                pollDataFromServer();
-            });
+        if ($('#enablepull')[0].checked == true) {
+            $.ajax(
+                '/links',
+                {
+                    method: 'GET',
+                    cache: true
+                }
+            )
+                .done(function (res) {
+                    $('#linklist').html(res);
+                    listen();
+                    console.log("success");
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function (res) {
 
+                    pollDataFromServer();
+
+                });
+        }
     }
 
     getDataFromServer();
@@ -37,47 +40,26 @@
         $('form[name=addlink]')[0].reset();
     });
 
-    function pullLinks() {
-        $.ajax(
-            '/links',
-            {
-                method: 'GET',
-                cache: true
-            }
-        )
-            .done(function () {
-                console.log("success");
-            })
-            .fail(function () {
-                console.log("error");
-            })
-            .always(function (res) {
-                debugmessage(res);
-                window.setTimeout(pullLinks, 50000);
-            });
-
-
-    }
 
     function debugmessage(response) {
         if (response != undefined) {
             if (response.type == "error") {
-                $('#messages').html("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
+                $('#messages').append("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
             } else {
-                $('#messages').html("<div class='alert alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
+                $('#messages').append("<div class='alert alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
             }
         }
-        getDataFromServer();
+        //getDataFromServer();
         //timing the alert box to close after 5 seconds
         clearTimeout(timeout);
         timeout = window.setTimeout(function () {
-            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $("#messages:last-child").fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
         }, 5000);
 
         //Adding a click event to the 'x' button to close immediately
-        $('.alert .close').on("click", function (e) {
+        $('#messages:last-child .close').on("click", function (e) {
             $(this).parent().fadeTo(500, 0).slideUp(500);
         });
     }

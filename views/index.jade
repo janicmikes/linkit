@@ -20,7 +20,9 @@ html(lang='en')
                         span.icon-bar
                     a.navbar-brand(href='') Linkit
                 .navbar-collapse.collapse
+                    input(type="checkbox")#enablepull
                     a.navbar-btn.btn.btn-sm.btn-danger(href='/') Reset
+                    //-button.navbar-btn.btn.btn-sm.btn-primary(data-toggle='button' aria-pressed='false') Poll Data
                     if user
                         button.navbar-btn.pull-right.btn.btn-sm.btn-danger(type='button')#signout Sign out
                         p.navbar-text.pull-right.
@@ -43,7 +45,7 @@ html(lang='en')
                 form(role='form', name='addlink', autocomplete='off')
                     .form-group
                         label(for='title') URL
-                        input(type='text', placeholder='http://www.domain.com', name='url').form-control#newlinkurl
+                        input(type='url', placeholder='http://www.domain.com', name='url').form-control#newlinkurl
                     .form-group
                         label(for='title') Title
                         input(type='text', placeholder='My Cool Page', name='title').form-control#newlinktitle

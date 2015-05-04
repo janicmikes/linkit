@@ -8,9 +8,7 @@ var session = {
     }
 }
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
-    //res.render('index', {title: 'Express'});
     req.app.get('linkrepo').initDemo();
     res.redirect('/linkit');
 });

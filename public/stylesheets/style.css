@@ -18,8 +18,8 @@ a {
 #messages{
     position: fixed;
     top: 60px;
-    left: 10%;
-    width: 80%;
+    right: 10px;
+    width: 400px;
 }
 
 .navbar-text {
