@@ -1,6 +1,5 @@
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -8,20 +7,33 @@ a {
     color: #00B7FF;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 50px;
+}
 
+li {
+    margin-bottom: 20px;
+    background-color: lightgray;
+    padding: 15px;
+    clear: both;
+    vertical-align: middle;
+}
 
-.votes{
+.ranking {
     text-align: center;
-    line-height: 2em;
+    padding: 5px;
 }
 
-#messages{
-    position: fixed;
-    top: 60px;
-    right: 10px;
-    width: 400px;
+.control {
+    width: 50px;
+    text-align: center;
+    display: inline-block;
 }
 
-.navbar-text {
-    margin-right: 15px;
+.linkDetails {
+    padding-left: 20px;
+    display: inline-block;
 }

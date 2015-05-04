@@ -7,19 +7,41 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var links = require('./routes/links');
-
-var linkrepo = require('./data/linkrepo');
-
 
 var app = express();
+
+var links = [
+    {
+        'id': 12,
+        'url': 'www.google.com',
+        'title': 'Google',
+        'sender': 'vquni',
+        'date': '10-04-2015',
+        'ranking': 3
+    },
+    {
+        'id': 13,
+        'url': 'www.kfnanatereze.ch',
+        'title': 'KF Nana Tereze',
+        'sender': 'vquni',
+        'date': '01-05-2015',
+        'ranking': 7
+    },
+    {
+        'id': 17,
+        'url': 'www.hoi.net',
+        'title': 'Hoi',
+        'sender': 'vquni',
+        'date': '01-05-2015',
+        'ranking': 1
+    }
+]
+
+app.set('links', links);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-// Data repositories
-app.set('linkrepo', linkrepo);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -31,38 +53,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/links', links);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-
+});*/
 
 module.exports = app;
