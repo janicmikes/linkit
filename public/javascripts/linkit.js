@@ -3,8 +3,8 @@
     var pulling;
 
     function pollDataFromServer() {
-        console.log('restart timer');
-        clearTimeout(pulling);
+        //console.log('restart timer');
+        //clearTimeout(pulling);
         pulling = window.setTimeout(getDataFromServer, 2000);
     }
 
@@ -27,10 +27,11 @@
                 })
                 .always(function (res) {
 
-                    pollDataFromServer();
+                    //pollDataFromServer();
 
                 });
         }
+        pollDataFromServer();
     }
 
     getDataFromServer();
