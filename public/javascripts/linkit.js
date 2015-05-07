@@ -43,7 +43,7 @@
 
 
     var debugmessage = function (response) {
-        if (response != undefined) {
+        if (response !== undefined) {
             if (response.type == "error") {
                 $('#messages').append("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
             } else {
@@ -63,7 +63,7 @@
         $('#messages:last-child .close').on("click", function (e) {
             $(this).parent().fadeTo(500, 0).slideUp(500);
         });
-    }
+    };
 
     function saveLink() {
         $.ajax(
@@ -102,7 +102,7 @@
             }
         ).always(debugmessage);
 
-        $('#linkvotes-' + id).text($('#linkvotes-' + id).text() - -1);
+        $('#linkvotes-' + id).text(+$('#linkvotes-' + id).text() + 1);
 
     }
 
