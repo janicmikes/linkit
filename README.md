@@ -3,7 +3,7 @@
 
 WED1 LinkIt Project
 
-This is a school project of WED1 (Web Engeneering and Design 1) at the Hochschule für Technik in Rapperswil (HSR).
+This is a school project of WED1 (Web Engineering and Design 1) at the Hochschule für Technik in Rapperswil (HSR).
 
 The basic idea is to create a simplified Reddit clone.
 
