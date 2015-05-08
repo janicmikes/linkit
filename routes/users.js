@@ -14,6 +14,7 @@ router.post('/login', function (req, res, next) {
 /* GET users listing. */
 router.get('/logout', function (req, res, next) {
     req.session.username = undefined;
+    req.session.destroy();
     res.redirect('/linkit');
 });
 

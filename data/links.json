@@ -1,28 +1,20 @@
 [
   {
-    "id": 1,
     "title": "GitHub VCS",
     "description": "Powerful collaboration, code review, and code management for open source and private projects.",
     "url": "http://www.github.com",
-    "rating": 3,
-    "sender": "yanickgubler",
-    "date": "04.05.2015 12:57"
+    "sender": "yanickgubler"
   },
   {
-    "id": 2,
     "title": "Search Engine",
     "description": "A very popular search engine",
     "url": "http://www.google.com",
-    "rating": 2,
-    "sender": "janicmikes",
-    "date": "24.04.2015 18:32"
+    "sender": "janicmikes"
   },
   {
-    "id": 3,
     "title": "Gubis Page",
+    "description": "Personal page of Yanick Gubler",
     "url": "http://www.ygubler.ch",
-    "rating": -1,
-    "sender": "petermuster",
-    "date": "17.04.2006 19:00"
+    "sender": "yanickgubler"
   }
 ]
