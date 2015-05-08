@@ -4,11 +4,9 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-    color: #00B7FF;
+.navbar-collapse .sr-only, .navbar-header .sr-only{
+    color: white;
 }
-
-
 
 .votes{
     text-align: center;
@@ -21,6 +19,8 @@ a {
     right: 10px;
     width: 400px;
 }
+
+
 
 .navbar-text {
     margin-right: 15px;

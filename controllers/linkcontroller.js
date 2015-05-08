@@ -1,15 +1,16 @@
-var userrepo = require('./userrepo');
+var Link = require('../models/link');
+
 
 var linkrepo = {
     links: [],
-    demolinks: require('./links.json'),
+    demolinks: require('../data/links'),
     initDemo: function () {
-        console.log('reset demo');
+        console.log('reset to demo data');
         this.links = [];
         this.sequence = 0;
         for (var i = 0; i < this.demolinks.length; i++) {
             var tmplink = this.demolinks[i];
-            this.addLink(tmplink.title, tmplink.url, tmplink.description, tmplink.sender, tmplink.rating, tmplink.date);
+            this.addLink(tmplink.title, tmplink.url, tmplink.description, tmplink.sender);
         }
     },
     sequence: 0,
@@ -19,25 +20,13 @@ var linkrepo = {
     getAllLinks: function () {
         return this.links
             .sort(function (a, b) {
-                return b.rating - a.rating;
+                return b.rating.value - a.rating.value;
             });
     },
-    addLink: function (title, url, description, sender, rating, date) {
-        if (rating === undefined) rating = 0;
-        if (date === undefined) {
-            date = new Date();
-        }
-        if (sender != undefined) {
+    addLink: function (title, url, description, sender) {
+        if (sender !== undefined) {
             this.links.push(
-                {
-                    "id": this.nextLinkId(),
-                    "title": title,
-                    "url": url,
-                    "description": description,
-                    "rating": rating,
-                    "sender": userrepo.getUserByUsername(sender),
-                    "date": date
-                }
+                new Link(this.nextLinkId(), title, url, description, sender)
             );
         }
         return true;
@@ -58,11 +47,13 @@ var linkrepo = {
             }
         }
     },
-    upVoteLink: function (id) {
-        this.getLinkById(id).rating++;
+    upVoteLink: function (id, username) {
+        this.getLinkById(id).rating._up(username);
+        //this.getLinkById(id).rating++;
     },
-    downVoteLink: function (id) {
-        this.getLinkById(id).rating--;
+    downVoteLink: function (id, username) {
+        this.getLinkById(id).rating._down(username);
+        //this.getLinkById(id).rating--;
     },
     getLinkById: function(id){
         for (var i = 0; i < this.links.length; i++) {
@@ -72,8 +63,8 @@ var linkrepo = {
         }
     },
     isOwner: function (username, id){
-        return username != undefined && this.getLinkById(id).sender.username == username;
+        return username !== undefined && this.getLinkById(id).sender.username == username;
     }
-}
+};
 
 module.exports = linkrepo;

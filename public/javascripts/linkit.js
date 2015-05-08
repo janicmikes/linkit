@@ -1,6 +1,7 @@
 (function ($) {
     var timeout;
     var pulling;
+    var counter = 0;
 
     function pollDataFromServer() {
         //console.log('restart timer');
@@ -45,23 +46,24 @@
     var debugmessage = function (response) {
         if (response !== undefined) {
             if (response.type == "error") {
-                $('#messages').append("<div class='alert alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
+                $('#messages').append("<div class='alert shown alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
             } else {
-                $('#messages').append("<div class='alert alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
+                $('#messages').append("<div class='alert shown alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
             }
         }
         //getDataFromServer();
         //timing the alert box to close after 5 seconds
-        clearTimeout(timeout);
-        timeout = window.setTimeout(function () {
-            $("#messages:last-child").fadeTo(500, 0).slideUp(500, function () {
+        window.setTimeout(function (counter) {
+            $('.alert.shown').first().removeClass('shown').fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
         }, 5000);
 
         //Adding a click event to the 'x' button to close immediately
-        $('#messages:last-child .close').on("click", function (e) {
-            $(this).parent().fadeTo(500, 0).slideUp(500);
+        $('.alert .close').last().on("click", function (e) {
+            $(this).parent().fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
         });
     };
 
@@ -71,8 +73,9 @@
             {
                 method: 'PUT',
                 data: {
-                    title: $("#newlinktitle")[0].value,
-                    url: $("#newlinkurl")[0].value
+                    title: document.forms.addlink.title.value,
+                    url: document.forms.addlink.url.value,
+                    description: document.forms.addlink.description.value
                 },
                 dataType: "json"
             }
