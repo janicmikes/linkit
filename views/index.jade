@@ -63,7 +63,13 @@ html(lang='en')
                         else
                             button(type='button', data-id='#{link.id}', id='upvote-#{link.id}').btn.btn-default.btn-sm.upvotelink.disabled
                                 span.glyphicon.glyphicon-chevron-up
-                        .votes(id='linkvotes-#{link.id}')=link.rating.value
+                        .votes
+                            if link.rating.value > 0
+                                span.badge.btn-success(id='linkvotes-#{link.id}')=link.rating.value
+                            else if link.rating.value < 0
+                                span.badge.btn-danger(id='linkvotes-#{link.id}')=link.rating.value
+                            else
+                                span.badge(id='linkvotes-#{link.id}')=link.rating.value
                         label.sr-only(for='downvote-#{link.id}') Downvote #{link.title}
                         if user && !link.rating._voted(user)
                             button(type='button', data-id='#{link.id}', id='downvote-#{link.id}').btn.btn-default.btn-sm.downvotelink
