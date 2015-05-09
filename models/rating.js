@@ -3,6 +3,14 @@ module.exports = function Rating() {
     var voters = [];
     var this_rating = this;
 
+    this._voted = function(username){
+        if(!voters[username]){
+            return false;
+        } else {
+            return true;
+        }
+    };
+
     this._up = function(username) {
         if (!voters[username]) {
             this_rating.value++;

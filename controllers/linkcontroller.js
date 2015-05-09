@@ -1,5 +1,5 @@
 var Link = require('../models/link');
-
+var usercontroller = require('../controllers/usercontroller');
 
 var linkrepo = {
     links: [],
@@ -26,7 +26,7 @@ var linkrepo = {
     addLink: function (title, url, description, sender) {
         if (sender !== undefined) {
             this.links.push(
-                new Link(this.nextLinkId(), title, url, description, sender)
+                new Link(this.nextLinkId(), title, url, description, usercontroller.getUserByUsername(sender))
             );
         }
         return true;
@@ -48,12 +48,10 @@ var linkrepo = {
         }
     },
     upVoteLink: function (id, username) {
-        this.getLinkById(id).rating._up(username);
-        //this.getLinkById(id).rating++;
+        return this.getLinkById(id).rating._up(username);
     },
     downVoteLink: function (id, username) {
-        this.getLinkById(id).rating._down(username);
-        //this.getLinkById(id).rating--;
+        return this.getLinkById(id).rating._down(username);
     },
     getLinkById: function(id){
         for (var i = 0; i < this.links.length; i++) {

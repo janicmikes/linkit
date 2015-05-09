@@ -1,38 +1,25 @@
 (function ($) {
-    var timeout;
     var pulling;
-    var counter = 0;
 
-    function pollDataFromServer() {
-        //console.log('restart timer');
-        //clearTimeout(pulling);
-        pulling = window.setTimeout(getDataFromServer, 2000);
-    }
+    var pollDataFromServer = function () {
+        clearTimeout(pulling);
+        pulling = window.setTimeout(getDataFromServer, 5000);
+    };
 
     function getDataFromServer() {
-        //if ($('#enablepull')[0].checked == true) {
-            $.ajax(
-                '/links',
-                {
-                    method: 'GET',
-                    cache: true
-                }
-            )
-                .done(function (res) {
-                    $('#linklist').html(res);
-                    listen();
-                    //console.log("success");
-                })
-                .fail(function () {
-                    //console.log("error");
-                })
-                .always(function (res) {
-
-                    //pollDataFromServer();
-
-                });
-        //}
-        pollDataFromServer();
+        $.ajax(
+            '/links',
+            {
+                method: 'GET',
+                cache: true
+            }
+        ).done(function (res) {
+                $('#linklist').html(res);
+                listen();
+            })
+            .always(function (res) {
+                pollDataFromServer();
+            });
     }
 
     getDataFromServer();
@@ -43,15 +30,18 @@
     });
 
 
-    var debugmessage = function (response) {
+    var callback = function (response) {
+        // stop pulling for smooth transitions
+        clearTimeout(pulling);
+
         if (response !== undefined) {
-            if (response.type == "error") {
+            if (response.text && response.type == "error") {
                 $('#messages').append("<div class='alert shown alert-danger'><button type='button' class='close'>×</button>" + response.text + "</div>");
             } else {
                 $('#messages').append("<div class='alert shown alert-success'><button type='button' class='close'>×</button>" + response.text + "</div>");
             }
         }
-        //getDataFromServer();
+
         //timing the alert box to close after 5 seconds
         window.setTimeout(function (counter) {
             $('.alert.shown').first().removeClass('shown').fadeTo(500, 0).slideUp(500, function () {
@@ -65,6 +55,31 @@
                 $(this).remove();
             });
         });
+
+        switch (response.action) {
+            case 'delete':
+                $('#link-' + response.id).fadeTo(500, 0).slideUp(300, function () {
+                    $(this).remove();
+                    pollDataFromServer();
+                });
+                break;
+            case 'upvote':
+                $('#linkvotes-' + response.id).text(response.value);
+                // reload to get an ordered list
+                getDataFromServer();
+                break;
+            case 'downvote':
+                $('#linkvotes-' + response.id).text(response.value);
+                // reload to get an ordered list
+                getDataFromServer();
+                break;
+            case 'save':
+                getDataFromServer();
+                break;
+            default:
+                // force a reload
+                pollDataFromServer();
+        }
     };
 
     function saveLink() {
@@ -79,7 +94,7 @@
                 },
                 dataType: "json"
             }
-        ).always(debugmessage);
+        ).always(callback);
     }
 
     function deleteLink(id) {
@@ -89,11 +104,7 @@
                 method: 'DELETE',
                 dataType: "json"
             }
-        ).always(debugmessage);
-
-        $('#link-' + id).fadeTo(500, 0).slideUp(300, function () {
-            $(this).remove();
-        });
+        ).always(callback);
     }
 
     function upvotelink(id) {
@@ -103,10 +114,7 @@
                 method: 'POST',
                 dataType: "json"
             }
-        ).always(debugmessage);
-
-        $('#linkvotes-' + id).text(+$('#linkvotes-' + id).text() + 1);
-
+        ).always(callback);
     }
 
     function downvotelink(id) {
@@ -116,9 +124,7 @@
                 method: 'POST',
                 dataType: "json"
             }
-        ).always(debugmessage);
-
-        $('#linkvotes-' + id).text($('#linkvotes-' + id).text() - 1);
+        ).always(callback);
     }
 
     function listen() {

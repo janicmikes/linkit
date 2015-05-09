@@ -11,10 +11,10 @@ router.get('/', function (req, res, next) {
 
 router.put('/', function (req, res, next) {
     //console.log('put');
-    if(req.session.username !== undefined){
-        if(req.body.title && req.body.url){
-            if(linkcontroller.addLink(req.body.title, req.body.url, req.body.description, req.session.username)){
-                res.end('{"type": "success", "text": "Link created"}');
+    if (req.session.username !== undefined) {
+        if (req.body.title && req.body.url) {
+            if (linkcontroller.addLink(req.body.title, req.body.url, req.body.description, req.session.username)) {
+                res.end('{"type": "success", "text": "Link created", "action": "save"}');
             } else {
                 res.end('{"type": "error", "text": "Failed to create link"}');
             }
@@ -28,31 +28,29 @@ router.put('/', function (req, res, next) {
 
 router.delete('/:id', function (req, res, next) {
     //console.log('delete ' + req.params.id);
-    if(linkcontroller.isOwner(req.session.username, req.params.id) === true){
+    if (linkcontroller.isOwner(req.session.username, req.params.id) === true) {
         linkcontroller.removeLinkById(req.params.id);
-        res.end('{"type": "success", "text": "Link deleted"}');
+        res.end('{"type": "success", "text": "Link deleted", "action": "delete", "id": ' + req.params.id + '}');
     } else {
         res.end('{"type": "error", "text": "Unable to delete link"}');
     }
 });
 
 router.post('/:id/up', function (req, res, next) {
-    //console.log('upvote ' + req.params.id);
-    if(req.session.username){
-        linkcontroller.upVoteLink(req.params.id);
-        res.end('{"type": "success", "text": "Link up voted"}');
+    if (req.session.username) {
+        var vote_count = linkcontroller.upVoteLink(req.params.id, req.session.username);
+        res.end('{"type": "success", "text": "Link up voted", "action": "upvote", "id": ' + req.params.id + ', "value": ' + vote_count + '}');
     } else {
-        res.end('{"type": "error", "text": "Unable to vote for link"}');
+        res.end('{"type": "error", "text": "Login to vote for links"}');
     }
 });
 
 router.post('/:id/down', function (req, res, next) {
-    //console.log('downvote ' + req.params.id);
-    if(req.session.username){
-        linkcontroller.downVoteLink(req.params.id);
-        res.end('{"type": "success", "text": "Down voted link"}');
+    if (req.session.username) {
+        var vote_count = linkcontroller.downVoteLink(req.params.id, req.session.username);
+        res.end('{"type": "success", "text": "Down voted link", "action": "downvote", "id": ' + req.params.id + ', "value": ' + vote_count + '}');
     } else {
-        res.end('{"type": "error", "text": "Unable to vote for link"}');
+        res.end('{"type": "error", "text": "Login to vote for links"}');
     }
 });
 

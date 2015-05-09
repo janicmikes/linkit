@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+var usercontroller = require('../controllers/usercontroller');
+
 /* GET users listing. */
 router.post('/login', function (req, res, next) {
-    if(req.app.get('userrepo').getUserByUsername(req.body.username)){
+    if(usercontroller.getUserByUsername(req.body.username)){
         req.session.username = req.body.username;
     } else {
         // failed login
@@ -13,10 +15,9 @@ router.post('/login', function (req, res, next) {
 
 /* GET users listing. */
 router.get('/logout', function (req, res, next) {
-    req.session.username = undefined;
+    req.session.username = null;
     req.session.destroy();
     res.redirect('/linkit');
 });
-
 
 module.exports = router;

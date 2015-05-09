@@ -2,12 +2,20 @@ for link in links
     li.media(id='link-#{link.id}', data-id='#{link.id}')
         .media-left
             label.sr-only(for='upvote-#{link.id}') Upvote #{link.title}
-            button(type='button', data-id='#{link.id}', id='upvote-#{link.id}').btn.btn-default.btn-sm.upvotelink
-                span.glyphicon.glyphicon-chevron-up
+            if user && !link.rating._voted(user)
+                button(type='button', data-id='#{link.id}', id='upvote-#{link.id}').btn.btn-default.btn-sm.upvotelink
+                    span.glyphicon.glyphicon-chevron-up
+            else
+                button(type='button', data-id='#{link.id}', id='upvote-#{link.id}').btn.btn-default.btn-sm.upvotelink.disabled
+                    span.glyphicon.glyphicon-chevron-up
             .votes(id='linkvotes-#{link.id}')=link.rating.value
             label.sr-only(for='downvote-#{link.id}') Downvote #{link.title}
-            button(type='button', data-id='#{link.id}', id='downvote-#{link.id}').btn.btn-default.btn-sm.downvotelink
-                span.glyphicon.glyphicon-chevron-down
+            if user && !link.rating._voted(user)
+                button(type='button', data-id='#{link.id}', id='downvote-#{link.id}').btn.btn-default.btn-sm.downvotelink
+                    span.glyphicon.glyphicon-chevron-down
+            else
+                button(type='button', data-id='#{link.id}', id='downvote-#{link.id}').btn.btn-default.btn-sm.downvotelink.disabled
+                    span.glyphicon.glyphicon-chevron-down
         .media-body
             if user && user == link.sender.username
                 label.sr-only(for='delete-#{link.id}') Delete link #{link.title}
@@ -18,6 +26,6 @@ for link in links
             p Created by&nbsp;
                 a(href='users/' + link.sender.username)=link.sender.fullname
                 | &nbsp;
-                =link.date
+                =link.submitTimeDisplay
 else
     li Sorry no links yet

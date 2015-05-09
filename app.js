@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var usercontroller = require('./controllers/usercontroller');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var links = require('./routes/links');
@@ -52,7 +54,8 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error: err,
+            "user": usercontroller.getUserByUsername(req.session.username)
         });
     });
 }
@@ -63,7 +66,8 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
+        "user": usercontroller.getUserByUsername(req.session.username)
     });
 });
 
