@@ -7,19 +7,22 @@ var userrepo = {
     },
     addUser: function (username, password, fullname) {
         this.users.push(
-            new User(users.length+1,username,password,fullname)
+            new User(users.length + 1, username, password, fullname)
         );
     },
-    getUserByUsername: function(username){
-        for (var i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === username) {
-                return {
-                    id: this.users[i].id,
-                    username: this.users[i].username,
-                    fullname: this.users[i].fullname
-                };
-            }
+    getUserByUsername: function (username) {
+        var user = this.users.filter(function (e) {
+            return e.username == username;
+        })[0];
+
+        if (user) {
+            // Do not deliver the passwords
+            return {
+                username: user.username,
+                fullname: user.fullname
+            };
         }
+
         return false;
     }
 };

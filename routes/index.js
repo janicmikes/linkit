@@ -10,7 +10,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/linkit', function (req, res, next) {
-    console.log('get Frontend');
     res.render('index', {"user": usercontroller.getUserByUsername(req.session.username), "links": linkcontroller.getAllLinks()});
 });
 

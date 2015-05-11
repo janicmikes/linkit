@@ -1,9 +1,13 @@
 (function ($) {
     var pulling;
 
+    Handlebars.registerHelper("prettyDate", function(date){
+        return $.prettyDate.format(date);
+    });
+
     var pollDataFromServer = function () {
         clearTimeout(pulling);
-        pulling = window.setTimeout(getDataFromServer, 5000);
+        pulling = window.setTimeout(getDataFromServer, 1000);
     };
 
     function getDataFromServer() {
@@ -14,7 +18,17 @@
                 cache: true
             }
         ).done(function (res) {
-                $('#linklist').html(res);
+                $(".deletelink").unbind();
+                $(".upvotelink").unbind();
+                $(".downvotelink").unbind();
+
+                var source = $("#templateContainer").html();
+                var template = Handlebars.compile(source);
+
+                var htmlData = template({links: res});
+
+                $('#linklist').html(htmlData);
+
                 listen();
             })
             .always(function (res) {
@@ -22,6 +36,7 @@
             });
     }
 
+    // Initially load data
     getDataFromServer();
 
     $("#newlinksubmit").click(function () {
@@ -98,6 +113,8 @@
     }
 
     function deleteLink(id) {
+        clearTimeout(pulling);
+
         $.ajax(
             '/links/' + id,
             {

@@ -35,9 +35,9 @@ html(lang='en')
                             //-    input.form-control(type='password', placeholder='Password')
                             //-= " "
                             button.btn.btn-success(type='submit') Sign in
-        // Main jumbotron for a primary marketing message or call to action
+        //.container
+        block content
         .container
-            block content
             hr
             footer
                 p &copy; Janic Mikes & Yanick Gubler 2015
@@ -46,5 +46,50 @@ html(lang='en')
         // ==================================================
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')
-        script(src='/javascripts/linkit.js')
+        script(src='/javascripts/handlebars-v3.0.3.js')
+        script(src='/javascripts/jquery.prettydate.js')
+        script(type="text/x-handlebars-template" id="templateContainer").
+            {{#each links}}
+                <li id="link-{{this.id}}" data-id="{{this.id}}" class="media">
+                    <div class="media-left">
+                        <label for="upvote-{{this.id}}" class="sr-only">{{this.title}}</label>
+                        {{#if this.permissions.vote}}
+                        <button type="button" data-id="{{this.id}}" id="upvote-{{this.id}}"
+                            class="btn btn-default btn-sm upvotelink">
+                        {{else}}
+                        <button type="button" data-id="{{this.id}}" id="upvote-{{this.id}}"
+                            class="btn btn-default btn-sm upvotelink disabled">
+                        {{/if}}
+                            <span class="glyphicon glyphicon-chevron-up"></span>
+                        </button>
+                        <div class="votes">
+                            <span id="linkvotes-{{this.id}}" class="badge">{{this.rating.value}}</span>
+                        </div>
+                        <label for="downvote-{{this.id}}" class="sr-only">Downvote {{this.title}}</label>
+                        {{#if this.permissions.vote}}
+                        <button type="button" data-id="{{this.id}}" id="downvote-{{this.id}}"
+                                class="btn btn-default btn-sm downvotelink">
+                        {{else}}
+                        <button type="button" data-id="{{this.id}}" id="downvote-{{this.id}}"
+                                class="btn btn-default btn-sm downvotelink disabled">
+                        {{/if}}
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </button>
+                    </div>
+                    <div class="media-body">
+                        {{#if this.permissions.delete}}
+                            <label for="delete-{{this.id}}" class="sr-only">Delete link {{this.title}}</label>
+                            <button class="btn btn-danger btn-sm pull-right deletelink" data-id="{{this.id}}" id="downvote-{{this.id}}">Delete</button>
+                        {{/if}}
+                        <h4 class="media-heading">
+                            <a href="{{this.url}}" target="_blank">{{this.title}}</a>
+                        </h4>
+                                    <p>{{this.description}}</p>
+                                    <p>Created by&nbsp;<a
+                                href="users/{{this.sender.username}}">{{this.sender.fullname}}</a>&nbsp;{{prettyDate this.submitTime}}
+                        </p>
+                    </div>
+                </li>
+            {{/each}}
+        script(src='javascripts/linkit.js')
                                                       

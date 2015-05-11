@@ -5,12 +5,10 @@ var linkcontroller = require('../controllers/linkcontroller');
 
 
 router.get('/', function (req, res, next) {
-    console.log('get all links');
-    res.render('links', {"user": req.session.username, "links": linkcontroller.getAllLinks()});
+    res.send(linkcontroller.getAllLinks(req.session.username));
 });
 
 router.put('/', function (req, res, next) {
-    //console.log('put');
     if (req.session.username !== undefined) {
         if (req.body.title && req.body.url) {
             if (linkcontroller.addLink(req.body.title, req.body.url, req.body.description, req.session.username)) {
@@ -27,7 +25,6 @@ router.put('/', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    //console.log('delete ' + req.params.id);
     if (linkcontroller.isOwner(req.session.username, req.params.id) === true) {
         linkcontroller.removeLinkById(req.params.id);
         res.end('{"type": "success", "text": "Link deleted", "action": "delete", "id": ' + req.params.id + '}');
