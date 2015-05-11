@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         jshint: {
             files: [
                 'gruntfile.js',
-                'public/**/*.js',
+                'public/javascripts/linkit.js',
                 'routes/*.js',
                 'controllers/*.js',
                 'models/*.js'
