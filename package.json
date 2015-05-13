@@ -2,6 +2,13 @@
   "name": "linkit",
   "version": "1.0.0",
   "private": true,
+  "description": "This is a school project in Web Engineering and Design 1 at the Hochschule für Technik Rapperswil.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janicmikes/linkit.git"
+  },
+  "author": "Manuel Roth <manuelroth@hotmail.ch>",
+  "bugs": "https://github.com/janicmikes/linkit/issues",
   "scripts": {
     "start": "node ./bin/www",
     "test": "grunt test"
